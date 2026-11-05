@@ -146,7 +146,26 @@ npm start
   - Email: `marcus@creator.io`
   - Password: `StudioSpace2025!`
 
-## 9. Render Deployment Instructions
+## 9. cURL API Testing Quick Recipes
+
+### Check Health & Database
+```bash
+curl -i http://localhost:5000/api/health
+```
+
+### Host Authentication & Receive Cookie
+```bash
+curl -i -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"elena@studiospace.io","password":"StudioSpace2025!"}'
+```
+
+### Explore Studios by Category
+```bash
+curl -i "http://localhost:5000/api/studios?category=Photo+Studios&sort=price_asc"
+```
+
+## 10. Render Deployment Instructions
 1. Push `studiospace-server` to GitHub.
 2. Create a new **Web Service** on [Render](https://render.com).
 3. Connect the repository with:
@@ -154,3 +173,4 @@ npm start
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
 4. Set environment variables on Render: `NODE_ENV=production`, `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`.
+
