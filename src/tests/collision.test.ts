@@ -20,3 +20,4 @@ assert.strictEqual(hasCollision('10:00', '14:00', '11:00', '13:00'), true);
 assert.strictEqual(hasCollision('10:00', '14:00', '14:00', '18:00'), false);
 assert.strictEqual(hasCollision('10:00', '14:00', '06:00', '10:00'), false);
 console.log('All collision logic tests passed!');
+

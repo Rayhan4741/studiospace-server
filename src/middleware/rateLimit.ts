@@ -29,3 +29,4 @@ export function simpleRateLimit(limit = 100, windowMs = 15 * 60 * 1000) {
     next();
   };
 }
+

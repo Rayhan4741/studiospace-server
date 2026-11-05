@@ -70,3 +70,4 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   req.user = user;
   next();
 }
+

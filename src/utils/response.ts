@@ -15,3 +15,4 @@ export function sendError(res: Response, message: string, statusCode = 400, erro
     ...(errors && { errors }),
   });
 }
+
