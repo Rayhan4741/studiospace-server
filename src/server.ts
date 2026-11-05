@@ -43,11 +43,23 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Global auth context extraction
 app.use(authenticate);
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
+// Health check endpoint with database ping
+app.get('/api/health', async (req, res) => {
+  let dbStatus = 'disconnected';
+  try {
+    const db = connectDB ? await connectDB() : null;
+    if (db) {
+      await db.command({ ping: 1 });
+      dbStatus = 'connected';
+    }
+  } catch (err) {
+    dbStatus = 'error';
+  }
+
   res.json({
     status: 'ok',
     service: 'studiospace-server',
+    database: dbStatus,
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
@@ -86,3 +98,4 @@ async function startServer() {
 startServer();
 
 export default app;
+
