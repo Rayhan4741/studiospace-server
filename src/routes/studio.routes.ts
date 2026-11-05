@@ -212,7 +212,6 @@ router.put('/:id', requireAuth, async (req: AuthenticatedRequest, res: Response,
       return;
     }
 
-    const validated = studioSchema.parse(req.body);
     const db = getDB();
     const userId = req.user!.userId;
 
@@ -225,11 +224,13 @@ router.put('/:id', requireAuth, async (req: AuthenticatedRequest, res: Response,
       return;
     }
 
-    // Ownership check
+    // Ownership check before parsing payload
     if (existingStudio.ownerId.toString() !== userId && req.user!.role !== 'admin') {
       res.status(403).json({ success: false, message: 'Forbidden. You do not own this studio.' });
       return;
     }
+
+    const validated = studioSchema.parse(req.body);
 
     const updateData = {
       title: validated.title.trim(),
@@ -298,3 +299,4 @@ router.delete('/:id', requireAuth, async (req: AuthenticatedRequest, res: Respon
 });
 
 export default router;
+
