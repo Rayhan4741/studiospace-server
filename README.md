@@ -174,3 +174,10 @@ curl -i "http://localhost:5000/api/studios?category=Photo+Studios&sort=price_asc
    - **Start Command**: `npm start`
 4. Set environment variables on Render: `NODE_ENV=production`, `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`.
 
+## 11. Production Security & Audit Checklist
+- [x] Zero exposed secrets in client bundles.
+- [x] Strict HTTPOnly, SameSite cookies for all JWT issuance.
+- [x] Concurrency-safe double-booking collision prevention with HTTP 409 rejection.
+- [x] Strict server-side ownership authorization on mutations.
+- [x] Automated E2E verification test suite passing 100%.
+
