@@ -85,10 +85,22 @@ const PORT = parseInt(ENV.PORT, 10) || 5000;
 async function startServer() {
   try {
     await connectDB();
-    app.listen(PORT, '0.0.0.0', () => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`[StudioSpace Server] Server running on port ${PORT} in ${ENV.NODE_ENV} mode`);
       console.log(`[StudioSpace Server] Health check available at http://localhost:${PORT}/api/health`);
     });
+
+    // Graceful shutdown
+    const shutdown = async (signal: string) => {
+      console.log(`[StudioSpace Server] ${signal} signal received: closing HTTP server`);
+      server.close(async () => {
+        console.log('[StudioSpace Server] HTTP server closed');
+        process.exit(0);
+      });
+    };
+
+    process.on('SIGTERM', () => shutdown('SIGTERM'));
+    process.on('SIGINT', () => shutdown('SIGINT'));
   } catch (error) {
     console.error('[StudioSpace Server] Failed to start server:', error);
     process.exit(1);
